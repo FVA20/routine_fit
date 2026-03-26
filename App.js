@@ -1,20 +1,39 @@
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import ProfileSetupScreen from './src/screens/ProfileSetupScreen';
+import QuestionnaireScreen from './src/screens/QuestionnaireScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import InferiorScreen from './src/screens/InferiorScreen';
+import SuperiorScreen from './src/screens/SuperiorScreen';
+import EjerciciosScreen from './src/screens/EjerciciosScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+    <NavigationContainer>
+      <StatusBar style="dark" />
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
+        <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Inferior" component={InferiorScreen} />
+        <Stack.Screen name="Superior" component={SuperiorScreen} />
+        <Stack.Screen name="Ejercicios" component={EjerciciosScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
