@@ -98,11 +98,15 @@ const ejerciciosPorGrupo = {
   'Femorales': [
     {
       nombre: 'Curl Femoral Acostado',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los mejores ejercicios para el trabajo de femoral con mejor rango y amplitud. El ejercicio se debe desarrollar de una manera que no involucre la espalda ni la lumbar. Se debe acostar por completo, con la espalda recta y con el glúteo parado. Tiene que tener en cuenta que el ejercicio se tiene que hacer de manera controlada para un mayor estímulo al músculo.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas y peso progresivo',
+      imagenes: [
+        require('../assets/femoralechado1.png'),
+        require('../assets/femoralechado2.png'),
+      ],
     },
     {
       nombre: 'Curl Femoral Sentado',
