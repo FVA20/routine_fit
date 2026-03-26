@@ -18,6 +18,7 @@
     "expo-auth-session": "~55.0.9",
     "expo-camera": "^55.0.10",
     "expo-crypto": "~55.0.10",
+    "expo-image": "~55.0.6",
     "expo-image-picker": "^55.0.13",
     "expo-status-bar": "~55.0.4",
     "expo-web-browser": "~55.0.10",

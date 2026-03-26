@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
 
@@ -24,12 +24,12 @@ export default function HomeScreen({ navigation }) {
 
       <View style={styles.opciones}>
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Inferior')}>
-          <Text style={styles.cardEmoji}>🦵</Text>
+          <Image source={require('../assets/icon_inferior.png')} style={styles.cardIcon} resizeMode="contain" />
           <Text style={styles.cardText}>Inferior</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Superior')}>
-          <Text style={styles.cardEmoji}>💪</Text>
+          <Image source={require('../assets/icon_superior.png')} style={styles.cardIcon} resizeMode="contain" />
           <Text style={styles.cardText}>Superior</Text>
         </TouchableOpacity>
       </View>
@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
   subtitulo: { fontSize: 16, color: '#666', marginBottom: 50 },
   opciones: { gap: 20 },
   card: {
-    borderWidth: 2, borderColor: '#000', borderRadius: 20,
-    paddingVertical: 50, alignItems: 'center',
+    alignItems: 'center',
   },
-  cardEmoji: { fontSize: 52, marginBottom: 12 },
+  cardIcon: { width: 240, height: 240, marginBottom: 8 },
   cardText: { fontSize: 22, fontWeight: '900', color: '#000', letterSpacing: 2 },
 });

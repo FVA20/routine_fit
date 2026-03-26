@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,42 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Animated,
 } from 'react-native';
+
+function EjercicioAnimado({ imagenes }) {
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const [frameActual, setFrameActual] = useState(0);
+
+  useEffect(() => {
+    const ciclo = () => {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start(() => {
+        setFrameActual(f => (f === 0 ? 1 : 0));
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      });
+    };
+    const intervalo = setInterval(ciclo, 900);
+    return () => clearInterval(intervalo);
+  }, []);
+
+  return (
+    <View style={styles.gifContainer}>
+      <Animated.Image
+        source={imagenes[frameActual]}
+        style={[styles.gif, { opacity: fadeAnim }]}
+        resizeMode="contain"
+      />
+    </View>
+  );
+}
 
 const ejerciciosPorGrupo = {
   'Cuádriceps': [
@@ -191,6 +226,64 @@ const ejerciciosPorGrupo = {
   ],
 };
 
+function TrackerSeries({ totalSeries, repeticiones }) {
+  const [completadas, setCompletadas] = useState([]);
+
+  const toggleSerie = (index) => {
+    setCompletadas(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+  };
+
+  const resetear = () => setCompletadas([]);
+  const todasCompletas = completadas.length === totalSeries;
+
+  return (
+    <View style={styles.trackerContainer}>
+      <View style={styles.trackerHeader}>
+        <Text style={styles.trackerTitulo}>
+          Series completadas{' '}
+          <Text style={todasCompletas ? styles.trackerContadorFin : styles.trackerContador}>
+            {completadas.length}/{totalSeries}
+          </Text>
+        </Text>
+        {completadas.length > 0 && (
+          <TouchableOpacity onPress={resetear}>
+            <Text style={styles.trackerReset}>Reiniciar</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+
+      <View style={styles.trackerFilas}>
+        {Array.from({ length: totalSeries }).map((_, i) => {
+          const hecha = completadas.includes(i);
+          return (
+            <TouchableOpacity
+              key={i}
+              style={[styles.serieBotón, hecha && styles.serieBotónHecho]}
+              onPress={() => toggleSerie(i)}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.serieNumero, hecha && styles.serieNumeroHecho]}>
+                {hecha ? '✓' : i + 1}
+              </Text>
+              <Text style={[styles.serieReps, hecha && styles.serieRepsHecho]}>
+                {repeticiones} reps
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      {todasCompletas && (
+        <View style={styles.trackerFeliz}>
+          <Text style={styles.trackerFelizTexto}>¡Series completadas! 💪</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
 export default function EjerciciosScreen({ navigation, route }) {
   const { grupo } = route.params;
   const ejercicios = ejerciciosPorGrupo[grupo] || [];
@@ -200,19 +293,16 @@ export default function EjerciciosScreen({ navigation, route }) {
   if (seleccionado !== null) {
     const ej = ejercicios[seleccionado];
     return (
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 120 }} showsVerticalScrollIndicator={false}>
         <TouchableOpacity style={styles.back} onPress={() => setSeleccionado(null)}>
           <Text style={styles.backText}>← Volver</Text>
         </TouchableOpacity>
 
         <Text style={styles.titulo}>{ej.nombre}</Text>
 
-        {/* Imágenes lado a lado */}
-        {ej.imagenes.length === 2 && (
-          <View style={styles.imagenesRow}>
-            <Image source={ej.imagenes[0]} style={styles.imagen} resizeMode="contain" />
-            <Image source={ej.imagenes[1]} style={styles.imagen} resizeMode="contain" />
-          </View>
+        {/* Animación entre imágenes */}
+        {ej.imagenes && ej.imagenes.length === 2 && (
+          <EjercicioAnimado imagenes={ej.imagenes} />
         )}
 
         {/* Series y Repeticiones */}
@@ -234,6 +324,11 @@ export default function EjerciciosScreen({ navigation, route }) {
           </View>
         )}
 
+        {/* Tracker de series */}
+        {ej.series && (
+          <TrackerSeries totalSeries={ej.series} repeticiones={ej.repeticiones} />
+        )}
+
         {/* Descripción */}
         {ej.descripcion ? (
           <View style={styles.descripcionBox}>
@@ -243,8 +338,6 @@ export default function EjerciciosScreen({ navigation, route }) {
         ) : (
           <Text style={styles.vacio}>Información próximamente...</Text>
         )}
-
-        <View style={{ height: 40 }} />
       </ScrollView>
     );
   }
@@ -337,18 +430,17 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 
-  // Detalle — Imágenes
-  imagenesRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  // Detalle — GIF
+  gifContainer: {
+    alignItems: 'center',
     marginBottom: 20,
     marginTop: 16,
   },
-  imagen: {
-    width: '48%',
-    height: 160,
-    borderRadius: 12,
-    backgroundColor: '#eee',
+  gif: {
+    width: '100%',
+    height: 260,
+    borderRadius: 16,
+    backgroundColor: '#f0f0f0',
   },
 
   // Stats
@@ -386,6 +478,87 @@ const styles = StyleSheet.create({
     width: 1,
     height: 40,
     backgroundColor: '#333',
+  },
+
+  // Tracker de series
+  trackerContainer: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#eee',
+  },
+  trackerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 14,
+  },
+  trackerTitulo: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#000',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  trackerContador: {
+    color: '#000',
+  },
+  trackerContadorFin: {
+    color: '#22c55e',
+  },
+  trackerReset: {
+    fontSize: 12,
+    color: '#888',
+    fontWeight: '600',
+  },
+  trackerFilas: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  serieBotón: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 14,
+    paddingVertical: 16,
+    borderWidth: 2,
+    borderColor: '#e0e0e0',
+    marginHorizontal: 4,
+  },
+  serieBotónHecho: {
+    backgroundColor: '#000',
+    borderColor: '#000',
+  },
+  serieNumero: {
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#000',
+  },
+  serieNumeroHecho: {
+    color: '#fff',
+  },
+  serieReps: {
+    fontSize: 11,
+    color: '#888',
+    marginTop: 2,
+  },
+  serieRepsHecho: {
+    color: '#aaa',
+  },
+  trackerFeliz: {
+    marginTop: 14,
+    backgroundColor: '#000',
+    borderRadius: 12,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  trackerFelizTexto: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 14,
   },
 
   // Descripción
