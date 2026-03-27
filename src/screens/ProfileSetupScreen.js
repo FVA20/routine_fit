@@ -22,6 +22,17 @@ export default function ProfileSetupScreen({ navigation, route }) {
   const [genero, setGenero] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Filtrar solo letras y espacios (para nombre y apellidos)
+  const soloLetras = (texto) => texto.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '');
+
+  // Filtrar solo números y un punto decimal (para peso, talla, peso meta)
+  const soloDecimal = (texto) => {
+    const limpio = texto.replace(/[^0-9.]/g, '');
+    const partes = limpio.split('.');
+    if (partes.length > 2) return partes[0] + '.' + partes.slice(1).join('');
+    return limpio;
+  };
+
   // Calcular IMC automáticamente cuando cambian peso o talla
   useEffect(() => {
     const p = parseFloat(peso);
@@ -82,6 +93,52 @@ export default function ProfileSetupScreen({ navigation, route }) {
       Alert.alert('Campos incompletos', 'Por favor completa todos los campos');
       return;
     }
+
+    // Validar nombre y apellidos
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(nombre.trim())) {
+      Alert.alert('Error', 'El nombre solo puede contener letras');
+      return;
+    }
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(apellidos.trim())) {
+      Alert.alert('Error', 'Los apellidos solo pueden contener letras');
+      return;
+    }
+
+    // Validar fecha real
+    const partesFecha = fechaNac.split('/');
+    if (partesFecha.length === 3) {
+      const dia = parseInt(partesFecha[0]);
+      const mes = parseInt(partesFecha[1]) - 1;
+      const anio = parseInt(partesFecha[2]);
+      const fechaObj = new Date(anio, mes, dia);
+      if (
+        fechaObj.getDate() !== dia ||
+        fechaObj.getMonth() !== mes ||
+        fechaObj.getFullYear() !== anio ||
+        fechaObj >= new Date()
+      ) {
+        Alert.alert('Error', 'Ingresa una fecha de nacimiento válida');
+        return;
+      }
+    }
+
+    // Validar rangos numéricos
+    const pesoNum = parseFloat(peso);
+    const tallaNum = parseFloat(talla);
+    const pesoMetaNum = parseFloat(pesoMeta);
+
+    if (isNaN(pesoNum) || pesoNum < 20 || pesoNum > 300) {
+      Alert.alert('Error', 'Ingresa un peso válido (entre 20 y 300 kg)');
+      return;
+    }
+    if (isNaN(tallaNum) || tallaNum < 50 || tallaNum > 250) {
+      Alert.alert('Error', 'Ingresa una talla válida (entre 50 y 250 cm)');
+      return;
+    }
+    if (isNaN(pesoMetaNum) || pesoMetaNum < 20 || pesoMetaNum > 300) {
+      Alert.alert('Error', 'Ingresa un peso meta válido (entre 20 y 300 kg)');
+      return;
+    }
     setLoading(true);
     try {
       const uid = auth.currentUser.uid;
@@ -120,7 +177,7 @@ export default function ProfileSetupScreen({ navigation, route }) {
         placeholder="Nombre"
         placeholderTextColor="#999"
         value={nombre}
-        onChangeText={setNombre}
+        onChangeText={(t) => setNombre(soloLetras(t))}
         editable={!fromGoogle}
       />
 
@@ -130,7 +187,7 @@ export default function ProfileSetupScreen({ navigation, route }) {
         placeholder="Apellidos"
         placeholderTextColor="#999"
         value={apellidos}
-        onChangeText={setApellidos}
+        onChangeText={(t) => setApellidos(soloLetras(t))}
         editable={!fromGoogle}
       />
       {fromGoogle && (
@@ -165,7 +222,7 @@ export default function ProfileSetupScreen({ navigation, route }) {
             placeholder="Ej: 70"
             placeholderTextColor="#999"
             value={peso}
-            onChangeText={setPeso}
+            onChangeText={(t) => setPeso(soloDecimal(t))}
             keyboardType="decimal-pad"
           />
         </View>
@@ -176,7 +233,7 @@ export default function ProfileSetupScreen({ navigation, route }) {
             placeholder="Ej: 175"
             placeholderTextColor="#999"
             value={talla}
-            onChangeText={setTalla}
+            onChangeText={(t) => setTalla(soloDecimal(t))}
             keyboardType="decimal-pad"
           />
         </View>
@@ -197,7 +254,7 @@ export default function ProfileSetupScreen({ navigation, route }) {
         placeholder="Ej: 65"
         placeholderTextColor="#999"
         value={pesoMeta}
-        onChangeText={setPesoMeta}
+        onChangeText={(t) => setPesoMeta(soloDecimal(t))}
         keyboardType="decimal-pad"
       />
 

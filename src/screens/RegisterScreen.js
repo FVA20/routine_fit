@@ -17,22 +17,32 @@ export default function RegisterScreen({ navigation }) {
     Alert.alert('Próximamente', 'El registro con Google estará disponible en la versión final de la app.');
   };
 
+  const emailValido = (correo) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    return regex.test(correo.trim());
+  };
+
   const handleRegister = async () => {
-    if (!email || !password || !confirm) {
+    const emailTrim = email.trim();
+    if (!emailTrim || !password || !confirm) {
       Alert.alert('Error', 'Por favor completa todos los campos');
       return;
     }
-    if (password !== confirm) {
-      Alert.alert('Error', 'Las contraseñas no coinciden');
+    if (!emailValido(emailTrim)) {
+      Alert.alert('Error', 'Ingresa un correo electrónico válido (ej: nombre@correo.com)');
       return;
     }
     if (password.length < 6) {
       Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres');
       return;
     }
+    if (password !== confirm) {
+      Alert.alert('Error', 'Las contraseñas no coinciden');
+      return;
+    }
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, emailTrim, password);
       navigation.replace('ProfileSetup', { fromGoogle: false });
     } catch (error) {
       const codigo = error.code;

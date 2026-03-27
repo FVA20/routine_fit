@@ -145,83 +145,119 @@ const ejerciciosPorGrupo = {
     },
     {
       nombre: 'Curl Femoral Sentado',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Ejercicio más controlado y con buena estimulación al músculo. Al realizar el ejercicio se tiene que tener en cuenta que al bajar tiene que aguantar 2 segundos para que se estimule bien el músculo. La subida se tiene que hacer de manera controlada, para no involucrar otro músculo.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso progresivo',
+      imagenes: [
+        require('../assets/femoralsentado1.png'),
+        require('../assets/femoralsentado2.png'),
+      ],
     },
     {
       nombre: 'Peso Muerto Rumano',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Ejercicio con un gran rango de estimulación. Al realizar este ejercicio se tiene que tener en cuenta el rango de bajada. Para las personas que recién empiezan en el gym es recomendable realizarlo con mancuernas para que tengan mejor equilibrio. En cambio las personas que ya son avanzadas o con experiencia es recomendable con barra. El rango de bajada se tiene que hacer sin doblar mucho la parte de la rodilla y manteniendo una postura sacando glúteos para que se pueda sentir el estímulo. Al subir se tiene que apretar el glúteo para que no involucre la lumbar, pero toda la estimulación se va a sentir en el femoral.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso único',
+      imagenes: [
+        require('../assets/pesorumano1.png'),
+        require('../assets/pesorumano2.png'),
+      ],
     },
   ],
   'Glúteos': [
     {
       nombre: 'Búlgaras',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los ejercicios con buena estimulación. Al realizar el ejercicio se tiene que tener en cuenta la distancia de las piernas. Lo más recomendable para personas que recién comienzan en el gym es hacerlo sin peso o con mancuernas de poco peso, para que tengan un mejor control. En cambio para las personas con experiencia o con mayor control se recomienda hacerlo en una máquina Smith para un mejor rango y mejor fatiga muscular. Tener en cuenta el rango del ejercicio para evitar lesiones con la lumbar.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso único',
+      imagenes: [
+        require('../assets/bulgara1.png'),
+        require('../assets/bulgara2.png'),
+      ],
     },
     {
       nombre: 'Hip Thrust',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los mejores ejercicios para una gran estimulación. Al realizar este ejercicio tener en cuenta la posición y la distancia de las piernas. El ejercicio se realiza con barra. Para las personas que recién comienzan es más factible hacerlo sin peso, para que aprendan la técnica. Para las personas con experiencia o avanzadas pueden realizarlo con un peso que controlen de manera controlada. Si no controlan la bajada pueden causar lesiones a la lumbar.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso progresivo',
+      imagenes: [
+        require('../assets/hiptrust1.png'),
+        require('../assets/hiptrust2.png'),
+      ],
     },
     {
       nombre: 'Patada en Polea',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los mejores ejercicios para llegar a la fatiga muscular. Al realizar el ejercicio tener en cuenta la posición y el rango de la polea. Se recomienda que el jalón de la polea esté en tu cintura, para que al realizar la patada tengas un mayor estímulo y de una manera controlada. Siempre apoyándose a la polea y estirar toda la pierna apretando el glúteo.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso único',
+      imagenes: [
+        require('../assets/patada1.png'),
+        require('../assets/patada2.png'),
+      ],
     },
   ],
   'Pantorrillas': [
     {
       nombre: 'Elevación de Pantorrillas de Pie en Máquina Smith',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los ejercicios para estimulamiento de gemelos. Al realizar el ejercicio se tiene que hacer de manera controlada.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso único',
+      imagenes: [
+        require('../assets/pantorilla1.png'),
+        require('../assets/pantorilla2.png'),
+      ],
     },
     {
       nombre: 'Extensión de Gemelos en Máquina',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los mejores ejercicios con más rango de bajada. Al realizar el ejercicio se tiene que tener en cuenta el peso. Se tiene que realizar de una manera controlada para que se llegue a una fatiga muscular.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso único',
+      imagenes: [
+        require('../assets/pantorilla3.png'),
+        require('../assets/pantorilla4.png'),
+      ],
     },
   ],
   'Aductores': [
     {
       nombre: 'Máquina de Aductores',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los mejores ejercicios con excelente estimulación para la parte de aducción de la pierna. Al realizarse el ejercicio se tiene que tener en cuenta la apertura de las piernas, por el mismo motivo de que no haya desgarros ni lesiones.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso progresivo',
+      imagenes: [
+        require('../assets/aductor1.png'),
+        require('../assets/aductor2.png'),
+      ],
     },
   ],
   'Abductores': [
     {
       nombre: 'Máquina de Abductores',
-      descripcion: '',
-      series: null,
-      repeticiones: null,
-      tipo: '',
-      imagenes: [],
+      descripcion:
+        'Uno de los mejores ejercicios para abducción. Al realizar este ejercicio se tiene que tener en cuenta el estímulo que generan, hacerlo de manera controlada y con un rango que se estimule correctamente.',
+      series: 4,
+      repeticiones: 12,
+      tipo: 'Series efectivas, peso progresivo',
+      imagenes: [
+        require('../assets/abductor1.png'),
+        require('../assets/abductor2.png'),
+      ],
     },
   ],
 };
