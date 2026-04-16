@@ -19,6 +19,15 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+
+      {/* Botones top */}
+      <TouchableOpacity style={styles.perfilBtn} onPress={() => navigation.navigate('Perfil')}>
+        <Text style={styles.perfilBtnText}>👤</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.rutinaBtn} onPress={() => navigation.navigate('Rutina')}>
+        <Text style={styles.rutinaBtnText}>📋</Text>
+      </TouchableOpacity>
+
       <Text style={styles.saludo}>Hola, {nombre || 'Atleta'} 👋</Text>
       <Text style={styles.subtitulo}>¿Qué vas a entrenar hoy?</Text>
 
@@ -39,6 +48,18 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', paddingHorizontal: 30, paddingTop: 80 },
+  perfilBtn: {
+    position: 'absolute', top: 50, right: 30,
+    width: 44, height: 44, borderRadius: 22,
+    backgroundColor: '#000', justifyContent: 'center', alignItems: 'center',
+  },
+  perfilBtnText: { fontSize: 20 },
+  rutinaBtn: {
+    position: 'absolute', top: 50, right: 84,
+    width: 44, height: 44, borderRadius: 22,
+    backgroundColor: '#000', justifyContent: 'center', alignItems: 'center',
+  },
+  rutinaBtnText: { fontSize: 20 },
   saludo: { fontSize: 28, fontWeight: '900', color: '#000', marginBottom: 6 },
   subtitulo: { fontSize: 16, color: '#666', marginBottom: 50 },
   opciones: { gap: 20 },

@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
 const grupos = [
-  { nombre: 'Cuádriceps', emoji: '🦵' },
-  { nombre: 'Femorales', emoji: '🦵' },
-  { nombre: 'Glúteos', emoji: '🍑' },
-  { nombre: 'Pantorrillas', emoji: '🦶' },
-  { nombre: 'Aductores', emoji: '🦵' },
-  { nombre: 'Abductores', emoji: '🦵' },
+  'Cuádriceps',
+  'Femorales',
+  'Glúteos',
+  'Pantorrillas',
+  'Aductores',
+  'Abductores',
 ];
 
 export default function InferiorScreen({ navigation }) {
@@ -17,18 +17,17 @@ export default function InferiorScreen({ navigation }) {
         <Text style={styles.backText}>← Volver</Text>
       </TouchableOpacity>
 
-      <Text style={styles.titulo}>🦵 Inferior</Text>
+      <Text style={styles.titulo}>Inferior</Text>
       <Text style={styles.subtitulo}>Selecciona el grupo muscular</Text>
 
       <View style={styles.lista}>
-        {grupos.map((g) => (
+        {grupos.map((nombre) => (
           <TouchableOpacity
-            key={g.nombre}
+            key={nombre}
             style={styles.card}
-            onPress={() => navigation.navigate('Ejercicios', { grupo: g.nombre })}
+            onPress={() => navigation.navigate('Ejercicios', { grupo: nombre })}
           >
-            <Text style={styles.cardEmoji}>{g.emoji}</Text>
-            <Text style={styles.cardText}>{g.nombre}</Text>
+            <Text style={styles.cardText}>{nombre}</Text>
             <Text style={styles.cardArrow}>→</Text>
           </TouchableOpacity>
         ))}
@@ -50,7 +49,6 @@ const styles = StyleSheet.create({
     borderWidth: 2, borderColor: '#000', borderRadius: 16,
     paddingVertical: 18, paddingHorizontal: 20,
   },
-  cardEmoji: { fontSize: 26, marginRight: 14 },
   cardText: { flex: 1, fontSize: 18, fontWeight: '700', color: '#000' },
   cardArrow: { fontSize: 18, color: '#000' },
 });

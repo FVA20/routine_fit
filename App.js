@@ -12,6 +12,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import InferiorScreen from './src/screens/InferiorScreen';
 import SuperiorScreen from './src/screens/SuperiorScreen';
 import EjerciciosScreen from './src/screens/EjerciciosScreen';
+import PerfilScreen from './src/screens/PerfilScreen';
+import RutinaScreen from './src/screens/RutinaScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +34,8 @@ export default function App() {
         <Stack.Screen name="Inferior" component={InferiorScreen} />
         <Stack.Screen name="Superior" component={SuperiorScreen} />
         <Stack.Screen name="Ejercicios" component={EjerciciosScreen} />
+        <Stack.Screen name="Perfil" component={PerfilScreen} />
+        <Stack.Screen name="Rutina" component={RutinaScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </SafeAreaProvider>
